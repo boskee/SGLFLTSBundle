@@ -35,7 +35,7 @@ It is a port of my sf1.0 timesheet application I used for 4 years.
     
         # composer.json  
         "require": {  
-            "sgl/flts-bundle": "dev-master"  
+            "sgl/flts-bundle": "dev-symfony2.1"
         }  
     ```
 
@@ -333,7 +333,7 @@ It is a port of my sf1.0 timesheet application I used for 4 years.
             "Friendsofsymfony/user-bundle": "*",
             "genemu/form-bundle": "2.1.*",
             "knplabs/knp-snappy-bundle": "dev-master",
-            "sgl/flts-bundle": "dev-master"
+            "sgl/flts-bundle": "dev-symfony2.1"
         },
 
         # [...]

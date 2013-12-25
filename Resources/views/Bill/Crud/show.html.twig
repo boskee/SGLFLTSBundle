@@ -109,27 +109,27 @@
             </tr>
             <tr>
                <th>{% trans %}Created at{% endtrans %}</th>
-               <td>{{ entity.createdAt|date('Y-m-d') }}</td>
+               <td>{{ entity.createdAt|localizeddate("short") }}</td>
             </tr>
             <tr>
                 <th>{% trans %}Billed{% endtrans %}</th>
-                <td>{% if (entity.billedAt) %}{% trans %}Yes{% endtrans %} : {{ entity.billedAt|date('Y-m-d') }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
+                <td>{% if (entity.billedAt) %}{% trans %}Yes{% endtrans %} : {{ entity.billedAt|localizeddate("short", "none") }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
             </tr>
             <tr>
                 <th>{% trans %}Sent{% endtrans %}</th>
-                <td>{% if (entity.sentAt) %}{% trans %}Yes{% endtrans %} : {{ entity.sentAt|date('Y-m-d') }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
+                <td>{% if (entity.sentAt) %}{% trans %}Yes{% endtrans %} : {{ entity.sentAt|localizeddate("short", "none") }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
             </tr>
             <tr>
                 <th>{% trans %}Paid{% endtrans %}</th>
-                <td>{% if (entity.paidAt) %}{% trans %}Yes{% endtrans %} : {{ entity.paidAt|date('Y-m-d') }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
+                <td>{% if (entity.paidAt) %}{% trans %}Yes{% endtrans %} : {{ entity.paidAt|localizeddate("short", "none") }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
             </tr>
             <tr>
                 <th>{% trans %}Deposited at{% endtrans %}</th>
-                <td>{% if (entity.depositedAt) %}{% trans %}Yes{% endtrans %} : {{ entity.depositedAt|date('Y-m-d') }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
+                <td>{% if (entity.depositedAt) %}{% trans %}Yes{% endtrans %} : {{ entity.depositedAt|localizeddate("short", "none") }}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
             </tr>
             <tr>
                 <th>{% trans %}Updated at{% endtrans %}</th>
-                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+                <td>{{ entity.updatedAt|localizeddate("short") }}</td>
             </tr>
             <tr>
                 <th>{% trans %}Taxable{% endtrans %}</th>

@@ -4,7 +4,7 @@
 
 {% block header %}
     {{ render(controller('SGLFLTSBundle:Part:recents')) }}
-    <h1><a href="{{ path('sgl_flts_dashboard') }}"><img id="logo" src="{{ business_logo_src }}" width="{{ business_logo_width }}" alt="{{ business_name }}" /></a></h1>
+    <h1><a href="{{ path('sgl_flts_dashboard') }}">{% if business_logo_src %}<img id="logo" src="{{ business_logo_src }}" width="{{ business_logo_width }}" alt="{{ business_name }}" />{% else %}{{ business_name }}{% endif %}</a></h1>
 {% endblock %}
 
 {% block nav %}

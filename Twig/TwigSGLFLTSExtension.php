@@ -11,9 +11,34 @@
 
 namespace SGL\FLTSBundle\Twig;
 
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Translation\TranslatorInterface;
+
 
 class TwigSGLFLTSExtension extends \Twig_Extension
 {
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
+    /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * Construct.
+     *
+     * @param TranslatorInterface $translator
+     * @param Container           $container  We need the entire container to lazy load the Converter
+     */
+    public function __construct(TranslatorInterface $translator, Container $container)
+    {
+        $this->translator = $translator;
+        $this->container = $container;
+    }
+
     public function getFilters()
     {
         return array(
@@ -34,13 +59,28 @@ class TwigSGLFLTSExtension extends \Twig_Extension
         );
     }
 
-    public function twig_price_filter($number, $decimals = 2, $decPoint = ',', $thousandsSep = ' ', $locale = null)
+    public function twig_price_filter($value, $valueCurrency = null, $decimal = true, $symbol = true)
     {
-        if ($locale == null) $locale = \Locale::getDefault();
-        $fmt = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
-        $price = $fmt->formatCurrency($number, "CAD");
+        $formatter = new \NumberFormatter($this->translator->getLocale(), $symbol ? \NumberFormatter::CURRENCY : \NumberFormatter::PATTERN_DECIMAL);
 
-        return $price;
+        if (null === $valueCurrency)
+        {
+            if (!($valueCurrency = $formatter->getTextAttribute(\NumberFormatter::CURRENCY_CODE)))
+            {
+                $valueCurrency = "USD";
+            }
+        }
+
+        $value = $formatter->formatCurrency($value, $valueCurrency);
+
+        if (!$decimal)
+        {
+            $value = preg_replace('/[.,]00((?=\D)|$)/', '', $value);
+        }
+
+        $value = str_replace(array('EU', 'UK', 'US'), '', $value);
+
+        return $value;
     }
 
     public function twig_hours_filter($string)
@@ -154,7 +194,7 @@ class TwigSGLFLTSExtension extends \Twig_Extension
          );
 
          $formatter = \IntlDateFormatter::create(
-             $locale !== null ? $locale : \Locale::getDefault(),
+             $locale !== null ? $locale : $this->translator->getLocale(),
              $formatValues[$dateFormat],
              $formatValues[$timeFormat],
              $date->getTimezone()->getName(),
